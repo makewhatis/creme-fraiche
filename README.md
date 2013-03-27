@@ -24,3 +24,5 @@ Tests
 - $venv/bin/python setup.py test
 
  
+=======
+Collect status updates from a team for a specified time period. 
