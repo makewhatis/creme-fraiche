@@ -114,10 +114,10 @@ class Membership(Base):
 
 # very temporary
 config = {
-    'ldap_url' = 'ldap_url',
-    'userdn' = 'userdn',
-    'password' = 'password',
-    'bind_dn' = 'bind_dn'
+    'ldap_url': 'ldap_url',
+    'userdn': 'userdn',
+    'password': 'password',
+    'bind_dn': 'bind_dn'
 }
 
 
