@@ -234,6 +234,7 @@ def get_team(team):
         return False
     return result
 
+
 def get_role(role):
     try:
         result = DBSession.query(Roles).filter(Roles.name == str(role)).first()
@@ -262,18 +263,18 @@ def get_user_by_id(user_id):
     return user
 
 
-def get_users_groups(user_id):
+def get_users_roles(user_id):
     try:
-        groupsobj = DBSession.query(Group).filter(
-            Group.id == Membership.groupid).\
-            filter(Membership.userid == user_id)
+        roles_obj = DBSession.query(Roles).filter(
+            Roles.id == Role_Membership.role_id).\
+            filter(Role_Membership.user_id == user_id).all()
     except DBAPIError:
-        raise
-    groups = []
-    for group in groupsobj:
-        if group.shortname == 'role':
-            groups.append(group.name)
-    return groups
+        log.error("Error querying roles for: %s" % user_id)
+        return False
+    roles = []
+    for role in roles_obj:
+        roles.append(role.name)
+    return roles
 
 
 def insert_base(eng):

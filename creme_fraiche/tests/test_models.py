@@ -119,3 +119,14 @@ class TestModel(unittest.TestCase):
         with mock.patch.object(DBSession, 'query') as sess:
                 sess.side_effect = DBAPIError(None, None, 'ERROR')
                 results = get_user_by_id(1)
+
+    def test_fail_get_users_roles(self):
+        from creme_fraiche.models import get_users_roles
+        from creme_fraiche.models import DBSession
+        from sqlalchemy.exc import DBAPIError
+
+
+        with mock.patch.object(DBSession, 'query') as sess:
+                sess.side_effect = DBAPIError(None, None, 'ERROR')            
+                roles = get_users_roles(1)
+        self.assertEqual(roles, False, "Did not fail and return False")
