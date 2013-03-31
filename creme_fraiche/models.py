@@ -226,28 +226,39 @@ def authenticate(username, password):
         log.info("LDAP Login failed for %s" % (uname))
 
 
-def get_group(group):
+def get_team(team):
     try:
-        group = DBSession.query(Group).filter(Group.name == str(group)).first()
+        result = DBSession.query(Teams).filter(Teams.name == str(team)).first()
     except DBAPIError:
-        raise
-    return group
+        log.error("Error querying team: %s" % team)
+        return False
+    return result
+
+def get_role(role):
+    try:
+        result = DBSession.query(Roles).filter(Roles.name == str(role)).first()
+    except DBAPIError:
+        log.error("Error querying role: %s" % role)
+        return False
+    return result
 
 
-def get_user(username):
+def get_user_by_username(username):
     try:
-        user = DBSession.query(User).filter(
-            User.username == str(username)).first()
+        user = DBSession.query(Users).filter(
+            Users.username == str(username)).first()
     except DBAPIError:
-        raise
+        log.error("Error querying user: %s" % username)
+        return False
     return user
 
 
-def get_user_by_id(userid):
+def get_user_by_id(user_id):
     try:
-        user = DBSession.query(User).filter(User.id == userid).first()
+        user = DBSession.query(Users).filter(Users.id == user_id).first()
     except DBAPIError:
-        raise
+        log.error("Error querying user: %s" % user_id)
+        return False
     return user
 
 
