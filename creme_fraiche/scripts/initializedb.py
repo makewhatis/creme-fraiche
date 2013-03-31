@@ -12,8 +12,8 @@ from pyramid.paster import (
 from ..models import (
     Base,
     DBSession,
-    User,
-    Membership,
+    Users,
+    Role_Membership,
 )
 
 

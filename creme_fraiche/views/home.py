@@ -11,7 +11,8 @@ from pyramid.httpexceptions import HTTPNotFound
 from sqlalchemy import desc
 from sqlalchemy.exc import DBAPIError
 
-from ..models import DBSession
+from creme_fraiche.models import DBSession
+from creme_fraiche.models import Users
 
 
 @view_config(
@@ -19,7 +20,12 @@ from ..models import DBSession
     renderer='/home/index.mak'
 )
 def home_page(request):
-    return {'project': 'creme fraiche'}
+
+    users = DBSession.query(Users).all()
+    return dict(
+        project='creme fraiche',
+        users=users
+    )
 
 
 conn_err_msg = """\

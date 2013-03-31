@@ -22,6 +22,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm import backref
 from zope.sqlalchemy import ZopeTransactionExtension
 
+import transaction
+
 from pyramid.security import Allow
 from pyramid.security import Everyone
 
@@ -47,21 +49,32 @@ class RootFactory(object):
         pass
 
 
-class User(Base):
+class Users(Base):
 
-    __tablename__ = 'user'
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     username = Column(String(30), unique=True)
-    name = Column(String(50))
+    fullname = Column(String(150))
     email = Column(String(50))
 
-    groups = association_proxy(
-        "user_associations", "group")
+    roles = association_proxy(
+        "role_associations", "roles")
 
-    def __init__(self, username, name, email):
+    teams = association_proxy(
+        "team_associations", "teams")
+
+    def __init__(
+        self,
+        username,
+        fullname,
+        email
+    ):
         self.username = username
-        self.name = name
+        self.fullname = fullname
         self.email = email
+
+    def __repr__(self):
+        return 'Users(%s)' % repr(self.username)
 
     @classmethod
     def get_by_username(cls, username):
@@ -75,42 +88,103 @@ class User(Base):
         return user
 
 
-class Group(Base):
+class Roles(Base):
 
-    __tablename__ = 'group'
+    __tablename__ = 'roles'
     id = Column(Integer, primary_key=True)
     name = Column(Text, unique=True)
-    shortname = Column(Unicode(50))
-    status = Column(Integer)
 
-    def __init__(self, name, shortname, status):
+    def __init__(
+        self,
+        name
+    ):
         self.name = name
-        self.shortname = shortname
-        self.status = status
 
     def __repr__(self):
-        return 'Group(%s)' % repr(self.name)
+        return 'Roles(%s)' % repr(self.name)
 
 
-class Membership(Base):
+class Teams(Base):
 
-    __tablename__ = 'membership'
-    userid = Column(Integer, ForeignKey('user.id'), primary_key=True)
-    groupid = Column(Integer, ForeignKey('group.id'), primary_key=True)
+    __tablename__ = 'teams'
+    id = Column(Integer, primary_key=True)
+    name = Column(Text, unique=True)
+
+    def __init__(
+        self,
+        name
+    ):
+        self.name = name
+
+    def __repr__(self):
+        return 'Teams(%s)' % repr(self.name)
+
+
+class Team_Membership(Base):
+
+    __tablename__ = 'team_membership'
+    user_id = Column(
+        Integer,
+        ForeignKey('users.id'),
+        primary_key=True
+    )
+    team_id = Column(
+        Integer,
+        ForeignKey('teams.id'),
+        primary_key=True
+    )
 
     user = relationship(
-        User,
+        Users,
         backref=backref(
-            "user_associations",
+            "team_associations",
             cascade="all, delete-orphan"
         )
     )
 
-    group = relationship("Group")
+    team = relationship("Teams")
 
-    def __init__(self, userid, groupid):
-        self.userid = userid
-        self.groupid = groupid
+    def __init__(
+        self,
+        user_id,
+        team_id
+    ):
+        self.user_id = user_id
+        self.team_id = team_id
+
+
+class Role_Membership(Base):
+
+    __tablename__ = 'role_membership'
+    user_id = Column(
+        Integer,
+        ForeignKey('users.id'),
+        primary_key=True
+    )
+    role_id = Column(
+        Integer,
+        ForeignKey('roles.id'),
+        primary_key=True
+    )
+
+    user = relationship(
+        Users,
+        backref=backref(
+            "role_associations",
+            cascade="all, delete-orphan"
+        )
+    )
+
+    role = relationship("Roles")
+
+    def __init__(
+        self,
+        user_id,
+        role_id
+    ):
+        self.user_id = user_id
+        self.role_id = role_id
+
 
 # very temporary
 config = {
@@ -126,6 +200,7 @@ def authenticate(username, password):
     ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
     user_dn = config['userdn']
     user_pw = config['password']
+    # development setting
     return True
 
     try:
@@ -188,3 +263,49 @@ def get_users_groups(user_id):
         if group.shortname == 'role':
             groups.append(group.name)
     return groups
+
+
+def insert_base(eng):
+    # create a Session
+    DBSession.configure(bind=eng)
+    with transaction.manager:
+        users = [
+            Users(
+                "admin",
+                "MF Jones",
+                "admin@localhost"
+            ),
+        ]
+        DBSession.add_all(users)
+        transaction.manager.commit()
+
+        new_roles = [
+            Roles('admin'),
+            Roles('user'),
+        ]
+        DBSession.add_all(new_roles)
+        transaction.manager.commit()
+
+        new_teams = [
+            Teams('Linux'),
+            Teams('Accounting')
+        ]
+
+        DBSession.add_all(new_teams)
+        transaction.manager.commit()
+
+        new_team_members = [
+            Team_Membership(1, 1),
+            Team_Membership(1, 2)
+        ]
+
+        DBSession.add_all(new_team_members)
+        transaction.manager.commit()
+
+        new_role_members = [
+            Role_Membership(1, 1),
+            Role_Membership(1, 2)
+        ]
+
+        DBSession.add_all(new_role_members)
+        transaction.manager.commit()

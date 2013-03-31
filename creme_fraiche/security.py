@@ -2,17 +2,18 @@ from .models import get_group
 from .models import get_user
 from .models import get_users_groups
 from .models import DBSession
-from .models import User
-from .models import Membership
+from .models import Users
+from .models import Role_Membership
 from sqlalchemy.exc import DBAPIError
+
 
 def groupfinder(username, request):
     user = get_user(username)
     if not user:
         users_group = get_group('user')
-        new = User(
+        new = Users(
             username=username,
-            name=username,
+            fullname=username,
             email="%s@example.com" % username
         )
         try:
@@ -22,7 +23,7 @@ def groupfinder(username, request):
 
         newuser = get_user(username)
         print users_group.id
-        member = Membership(
+        member = Role_Membership(
             groupid=users_group.id,
             userid=newuser.id
         )
