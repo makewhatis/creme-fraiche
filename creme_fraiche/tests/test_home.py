@@ -40,7 +40,6 @@ class TestHomeFunctional(unittest.TestCase):
 
     def test_home(self):
         result = self.app.get('/', status=200)
-        print(result)
         content = """<li>MF Jones</li>"""
         asserting = content in str(result.body)
         self.assertEqual(asserting, True, asserting)
