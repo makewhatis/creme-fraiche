@@ -58,6 +58,140 @@ class TestModelTeams(unittest.TestCase):
         self.assertEqual(teams.__repr__(), "Teams('Linux')")
 
 
+class TestModelReportFormats(unittest.TestCase):
+
+    def _getTargetClass(self):
+        from creme_fraiche.models import ReportFormats
+        return ReportFormats
+
+    def _makeOne(self):
+        return self._getTargetClass()(
+            name='html'
+        )
+
+    def test_formats(self):
+        formats = self._makeOne()
+        self.assertEqual(formats.name, 'html')
+        self.assertEqual(formats.__repr__(), "ReportFormats('html')")
+
+
+class TestModelReportTemplates(unittest.TestCase):
+
+    def _getTargetClass(self):
+        from creme_fraiche.models import ReportTemplates
+        return ReportTemplates
+
+    def _makeOne(self):
+        return self._getTargetClass()(
+            name='ops',
+            style=".clearfix {*zoom: 1;]"
+        )
+
+    def test_templates(self):
+        templates = self._makeOne()
+        self.assertEqual(templates.name, 'ops')
+        self.assertEqual(templates.style, ".clearfix {*zoom: 1;]")
+        self.assertEqual(templates.__repr__(), "ReportTemplates('ops')")
+
+
+class TestModelReports(unittest.TestCase):
+
+    def _getTargetClass(self):
+        from creme_fraiche.models import Reports
+        return Reports
+
+    def _makeOne(self):
+        from datetime import datetime
+        self.time = datetime.now()
+        return self._getTargetClass()(
+            team_id=1,
+            template_id=1,
+            format_id=1,
+            report_time=self.time
+        )
+
+    def test_templates(self):
+        reports = self._makeOne()
+        self.assertEqual(reports.team_id, 1)
+        self.assertEqual(reports.report_time, self.time)
+        self.assertEqual(reports.template_id, 1)
+        self.assertEqual(reports.format_id, 1)
+
+
+class TestModelPermissionTypes(unittest.TestCase):
+
+    def _getTargetClass(self):
+        from creme_fraiche.models import PermissionTypes
+        return PermissionTypes
+
+    def _makeOne(self):
+        return self._getTargetClass()(
+            name='read'
+        )
+
+    def test_formats(self):
+        permission_types = self._makeOne()
+        self.assertEqual(permission_types.name, 'read')
+        self.assertEqual(
+            permission_types.__repr__(),
+            "PermissionTypes('read')"
+        )
+
+
+class TestModelCategory(unittest.TestCase):
+
+    def _getTargetClass(self):
+        from creme_fraiche.models import Category
+        return Category
+
+    def _makeOne(self):
+        return self._getTargetClass()(
+            name='projects',
+            parent_id=1,
+            team_id=1
+        )
+
+    def test_templates(self):
+        category = self._makeOne()
+        self.assertEqual(category.name, 'projects')
+        self.assertEqual(category.parent_id, 1)
+        self.assertEqual(category.team_id, 1)
+        self.assertEqual(
+            category.__repr__(),
+            "Category(projects)"
+        )
+
+
+class TestModelEntry(unittest.TestCase):
+
+    def _getTargetClass(self):
+        from creme_fraiche.models import Entry
+        return Entry
+
+    def _makeOne(self):
+        from datetime import datetime
+        self.time = datetime.now()
+        return self._getTargetClass()(
+            data='what is a data',
+            user_id=1,
+            cat_id=1,
+            team_id=1,
+            entry_time=self.time
+        )
+
+    def test_templates(self):
+        entry = self._makeOne()
+        self.assertEqual(entry.data, 'what is a data')
+        self.assertEqual(entry.user_id, 1)
+        self.assertEqual(entry.cat_id, 1)
+        self.assertEqual(entry.team_id, 1)
+        self.assertEqual(entry.entry_time, self.time)
+        self.assertEqual(
+            entry.__repr__(),
+            "Entry(what is a data)"
+        )
+
+
 class TestModel(unittest.TestCase):
 
     def test_get_team(self):
@@ -125,8 +259,7 @@ class TestModel(unittest.TestCase):
         from creme_fraiche.models import DBSession
         from sqlalchemy.exc import DBAPIError
 
-
         with mock.patch.object(DBSession, 'query') as sess:
-                sess.side_effect = DBAPIError(None, None, 'ERROR')            
+                sess.side_effect = DBAPIError(None, None, 'ERROR')
                 roles = get_users_roles(1)
         self.assertEqual(roles, False, "Did not fail and return False")
