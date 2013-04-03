@@ -1,7 +1,12 @@
 <%include file="/includes/header.html"/>
+<%include file="/includes/nav.html"/>
     <div class="span8">
         <h2>List Users</h2>
-
+        <div class="actions">
+            <a href="/admin/users/create">
+                <button class="btn btn-info" >Create User</button>
+            </a>
+        </div>
         <table class="table">
               <thead>
                 <tr>

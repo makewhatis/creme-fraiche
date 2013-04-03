@@ -22,3 +22,11 @@
 .footer-links li:first-child {
   padding-left: 0;
 }
+
+/* Actions */
+
+.actions {
+  position: relative;
+  margin-bottom: 20px;
+  float: right;
+}

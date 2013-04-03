@@ -1,4 +1,5 @@
 <%include file="/includes/header.html"/>
+<%include file="/includes/nav.html"/>
     <div class="span8">
         <h2>List Teams</h2>
 
