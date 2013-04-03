@@ -1,5 +1,4 @@
 import sys
-import ldap
 import re
 import time
 from datetime import datetime
@@ -371,44 +370,9 @@ class Entry(Base):
         return 'Entry(%s)' % self.data
 
 
-# very temporary
-config = {
-    'ldap_url': 'ldap_url',
-    'userdn': 'userdn',
-    'password': 'password',
-    'bind_dn': 'bind_dn'
-}
-
-
 def authenticate(username, password):
-    con = ldap.initialize(config['ldap_url'])
-    ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
-    user_dn = config['userdn']
-    user_pw = config['password']
-    # development setting
+    # during development
     return True
-
-    try:
-        # Perform bind to lookup user
-        con.simple_bind_s(user_dn, user_pw)
-        user_info = con.search_s(
-            config['bind_dn'],
-            ldap.SCOPE_SUBTREE,
-            '(mail=%s@example.com)' % username,
-            ['cn', 'mail']
-        )
-        # Assign userDN to uname
-        if user_info == []:
-            log.info("%s not found." % username)
-            return False
-
-        uname = user_info[0][0]
-        log.debug("LDAP Username: %s " % uname)
-        #Simple bind
-        con.simple_bind_s(uname, password)
-        return True
-    except ldap.LDAPError, e:
-        log.info("LDAP Login failed for %s" % (uname))
 
 
 def get_team(team):
