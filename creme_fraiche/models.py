@@ -234,18 +234,15 @@ class Reports(Base):
     )
     team_id = Column(
         Integer,
-        ForeignKey('teams.id'),
-        primary_key=True
+        ForeignKey('teams.id')
     )
     template_id = Column(
         Integer,
-        ForeignKey('report_templates.id'),
-        primary_key=True
+        ForeignKey('report_templates.id')
     )
     format_id = Column(
         Integer,
-        ForeignKey('report_formats.id'),
-        primary_key=True
+        ForeignKey('report_formats.id')
     )
     report_time = Column(
         DateTime,
@@ -288,18 +285,15 @@ class TemplatePermissions(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(
         Integer,
-        ForeignKey('users.id'),
-        primary_key=True
+        ForeignKey('users.id')
     )
     template_id = Column(
         Integer,
-        ForeignKey('report_templates.id'),
-        primary_key=True
+        ForeignKey('report_templates.id')
     )
     permission_id = Column(
         Integer,
-        ForeignKey('permission_types.id'),
-        primary_key=True
+        ForeignKey('permission_types.id')
     )
 
     def __init__(
@@ -321,8 +315,7 @@ class Category(Base):
     parent_id = Column(Integer)
     team_id = Column(
         Integer,
-        ForeignKey('teams.id'),
-        primary_key=True
+        ForeignKey('teams.id')
     )
 
     def __init__(
@@ -345,18 +338,15 @@ class Entry(Base):
     data = Column(Text)
     user_id = Column(
         Integer,
-        ForeignKey('users.id'),
-        primary_key=True
+        ForeignKey('users.id')
     )
     cat_id = Column(
         Integer,
-        ForeignKey('category.id'),
-        primary_key=True
+        ForeignKey('category.id')
     )
     team_id = Column(
         Integer,
-        ForeignKey('teams.id'),
-        primary_key=True
+        ForeignKey('teams.id')
     )
     entry_time = Column(
         DateTime,

@@ -10,6 +10,7 @@ from pyramid.paster import (
 )
 
 from ..models import (
+    insert_base,
     Base,
     DBSession,
     Users,
@@ -33,3 +34,5 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
+    insert_base(engine)
+

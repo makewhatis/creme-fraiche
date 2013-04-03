@@ -30,5 +30,9 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home_page', '/')
 
+    # Admin
+    config.add_route('admin_list_users', '/admin/users')
+    config.add_route('admin_list_teams', '/admin/teams')
+
     config.scan()
     return config.make_wsgi_app()
