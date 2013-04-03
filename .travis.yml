@@ -5,7 +5,7 @@ python:
   - '2.7'
 
 before_install: 
-  - sudo apt-get install libevent-dev python-dev-all
+  - sudo apt-get install libevent-dev python-dev
   - psql -c 'create database creme_fraiche;' -U postgres
   - pip install -q -r buildreqs.txt
 
