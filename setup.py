@@ -33,7 +33,6 @@ requires = [
     'waitress',
     'pyramid_beaker',
     'whoosh',
-    'python-ldap',
     'psycopg2',
 ]
 
