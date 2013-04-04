@@ -21,7 +21,7 @@ else:
     if py_version < (2, 6):
         raise RuntimeError('On Python 2, Space requires Python 2.6 or better')
 
-version = "0.0.1"
+version = "0.0.2"
 
 requires = [
     'pyramid',
