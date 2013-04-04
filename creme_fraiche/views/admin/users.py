@@ -11,7 +11,8 @@ from creme_fraiche.models import Users
 
 @view_config(
     route_name='admin_list_users',
-    renderer='/admin/users/list.mak'
+    renderer='/admin/users/list.mak',
+    permission='admin'
 )
 def admin_list_users(request):
     users = DBSession.query(Users).all()
@@ -20,14 +21,16 @@ def admin_list_users(request):
         print user
     return dict(
         project='creme fraiche',
-        users=users
+        users=users,
+        logged_in=authenticated_userid(request)
     )
 
 
 @view_config(
     route_name='admin_create_user',
     request_method="GET",
-    renderer='/admin/users/create.mak'
+    renderer='/admin/users/create.mak',
+    permission='admin'
 )
 def admin_create_user(request):
     users = DBSession.query(Users).all()
@@ -36,12 +39,14 @@ def admin_create_user(request):
         print user
     return dict(
         project='creme fraiche',
-        users=users
+        users=users,
+        logged_in=authenticated_userid(request)
     )
 
 @view_config(
     route_name='admin_create_user',
-    request_method="POST"
+    request_method="POST",
+    permission='admin'
 )
 def admin_create_user_post(request):
     users = DBSession.query(Users).all()
@@ -50,5 +55,6 @@ def admin_create_user_post(request):
         print user
     return dict(
         project='creme fraiche',
-        users=users
+        users=users,
+        logged_in=authenticated_userid(request)
     )

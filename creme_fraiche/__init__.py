@@ -29,6 +29,8 @@ def main(global_config, **settings):
     # Routes
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home_page', '/')
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
 
     # Admin
     config.add_route('admin_list_users', '/admin/users')

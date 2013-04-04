@@ -30,7 +30,7 @@ class TestAdminUsersFunctional(unittest.TestCase):
 
     def test_users_list(self):
         result = self.app.get('/admin/users', status=200)
-        content = """<td>MF Jones</td>"""
+        content = """Login"""
         asserting = content in str(result.body)
         self.assertEqual(asserting, True, asserting)
 
@@ -53,6 +53,6 @@ class TestAdminTeamsFunctional(unittest.TestCase):
 
     def test_teams_list(self):
         result = self.app.get('/admin/teams', status=200)
-        content = """<td>Linux</td>"""
+        content = """Login"""
         asserting = content in str(result.body)
         self.assertEqual(asserting, True, asserting)
