@@ -20,7 +20,7 @@ after_script:
   # Install the Heroku gem (or the Heroku toolbelt)
   - gem install heroku
   # Add your Heroku git repo:
-  - git remote add heroku git@heroku.com:whispering-lowlands-7679.git
+  - git remote add heroku git@heroku.com:creme-fraiche.git
   # Turn off warnings about SSH keys:
   - echo "Host heroku.com" >> ~/.ssh/config
   - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
