@@ -1,17 +1,34 @@
+---
 language: python
-
 python:
-  - '2.6'
-  - '2.7'
-
-before_install: 
-  - sudo apt-get install libevent-dev python-dev
-  - psql -c 'create database creme_fraiche;' -U postgres
-  - pip install -q -r requirements.txt
-
-script: "python setup.py test"
-
+- '2.6'
+- '2.7'
+before_install:
+- sudo apt-get install libevent-dev python-dev
+- psql -c 'create database creme_fraiche;' -U postgres
+- pip install -q -r requirements.txt
+script: python setup.py test
 notifications:
   email:
-      - david@makewhatis.com
-      - captainschreck@gmail.com
+  - david@makewhatis.com
+  - captainschreck@gmail.com
+env:
+  global:
+  - secure: ! 'WxNmmOowpVM86hKzAPOqeY1WS1l9Kq+3OJOcHjAWQbWLX4vPYod1TF7fnBfv1QDSNFLn6pGsFRyA695pkeLVGltSVN+5kbohx4gwSo0mEcFLzk+7w2TPUgdZB0BpPa7YciResSs57RRBUFnH0ZNn5yhP5pF85+PLBNA223v3lvU='
+
+after_script:
+  # Install the Heroku gem (or the Heroku toolbelt)
+  - gem install heroku
+  # Add your Heroku git repo:
+  - git remote add heroku git@heroku.com:whispering-lowlands-7679.git
+  # Turn off warnings about SSH keys:
+  - echo "Host heroku.com" >> ~/.ssh/config
+  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+  # Clear your current Heroku SSH keys:
+  - heroku keys:clear
+  # Add a new SSH key to Heroku
+  - yes | heroku keys:add
+  # Push to Heroku!
+  - yes | git push heroku master

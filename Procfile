@@ -1,1 +1,0 @@
-web: pserve heroku.ini
