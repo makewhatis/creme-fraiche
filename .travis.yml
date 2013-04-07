@@ -32,6 +32,8 @@ after_script:
   # Add your Heroku git repo:
   - git clone git@heroku.com:creme-fraiche.git heroku
   - cd heroku
+  - git config --global user.email "travis-ci@internets.ci"
+  - git config --global user.name "Travis CI"
   # Push to Heroku!
   - date > date.txt
   - git commit -a -m "auto update."
