@@ -64,7 +64,7 @@ class PyTest(TestCommand):
 
 
 setup(name='creme_fraiche',
-      version='0.0.1',
+      version='0.0.2',
       description='creme_fraiche',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
