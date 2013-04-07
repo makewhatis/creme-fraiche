@@ -31,4 +31,6 @@ after_script:
   # Add a new SSH key to Heroku
   - yes | heroku keys:add
   # Push to Heroku!
+  - date > date.txt
+  - git commit -a -m "auto update."
   - yes | git push heroku master
