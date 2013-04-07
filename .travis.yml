@@ -18,9 +18,8 @@ env:
 
 after_script:
   # Install the Heroku gem (or the Heroku toolbelt)
+  - rm -rf .git*
   - gem install heroku
-  # Add your Heroku git repo:
-  - git remote add heroku git@heroku.com:creme-fraiche.git
   # Turn off warnings about SSH keys:
   - echo "Host heroku.com" >> ~/.ssh/config
   - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
@@ -30,7 +29,10 @@ after_script:
   - heroku keys:clear
   # Add a new SSH key to Heroku
   - yes | heroku keys:add
+  # Add your Heroku git repo:
+  - git clone git@heroku.com:creme-fraiche.git heroku
+  - cd heroku
   # Push to Heroku!
   - date > date.txt
   - git commit -a -m "auto update."
-  - yes | git push heroku master
+  - yes | git push origin master
