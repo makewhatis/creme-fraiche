@@ -18,23 +18,6 @@ env:
 
 after_script:
   # Install the Heroku gem (or the Heroku toolbelt)
-  - rm -rf .git*
-  - gem install heroku
-  # Turn off warnings about SSH keys:
-  - echo "Host heroku.com" >> ~/.ssh/config
-  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
-  - echo "   CheckHostIP no" >> ~/.ssh/config
-  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
-  # Clear your current Heroku SSH keys:
-  - heroku keys:clear
-  # Add a new SSH key to Heroku
-  - yes | heroku keys:add
-  # Add your Heroku git repo:
-  - git clone git@heroku.com:creme-fraiche.git heroku
-  - cd heroku
-  - git config --global user.email "travis-ci@internets.ci"
-  - git config --global user.name "Travis CI"
-  # Push to Heroku!
-  - date > date.txt
-  - git commit -a -m "auto update."
-  - yes | git push origin master
+  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  - heroku plugins:install https://github.com/ddollar/heroku-anvil
+  - heroku build -r creme-fraiche  -b https://github.com/heroku/heroku-buildpack-python.git
