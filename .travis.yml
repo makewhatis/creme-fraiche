@@ -35,4 +35,4 @@ after_script:
   # Install the Heroku gem (or the Heroku toolbelt)
   - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
   - heroku plugins:install https://github.com/ddollar/heroku-anvil
-  - heroku build -r creme-fraiche  -b https://github.com/heroku/heroku-buildpack-python.git
+  - heroku build -r creme-fraiche  -b git://github.com/heroku/heroku-buildpack-python.git#v17
