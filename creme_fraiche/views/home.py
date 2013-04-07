@@ -13,6 +13,9 @@ from sqlalchemy.exc import DBAPIError
 
 from creme_fraiche.models import DBSession
 from creme_fraiche.models import Users
+from creme_fraiche.models import authenticate
+
+from creme_fraiche.exceptions import AuthException
 
 
 @view_config(
@@ -21,7 +24,11 @@ from creme_fraiche.models import Users
 )
 def home_page(request):
 
-    users = DBSession.query(Users).all()
+    try:
+        users = DBSession.query(Users).all()
+    except DBAPIError as e:
+        print(e)
+
     return dict(
         project='creme fraiche',
         users=users,
@@ -58,14 +65,21 @@ def login_view(request):
     login = ''
     password = ''
     if request.POST:
-        login = request.POST.get('login')
+        login = request.POST.get('username')
         password = request.POST.get('password')
 
-        userobj = authenticate(login, password)
+        try:
+            userobj = authenticate(login, password)
+        except AuthException as e:
+            userobj = False
+        
         if userobj:
             headers = remember(request, login)
+            request.session.flash("Logged in successfully!", 'success')
             return HTTPFound(location=came_from, headers=headers)
-        message = 'Failed login'
+        else:
+            request.session.flash("Login Failed.", 'warning')
+            return HTTPFound(location=request.route_url('login', message='done'))
 
     return dict(
         message=message,

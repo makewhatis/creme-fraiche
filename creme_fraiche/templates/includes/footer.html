@@ -19,7 +19,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${request.static_url('creme_fraiche:static/js/jquery.js')}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script src="${request.static_url('creme_fraiche:static/js/bootstrap-transition.js')}"></script>
     <script src="${request.static_url('creme_fraiche:static/js/bootstrap-alert.js')}"></script>
     <script src="${request.static_url('creme_fraiche:static/js/bootstrap-modal.js')}"></script>
@@ -32,6 +32,38 @@
     <script src="${request.static_url('creme_fraiche:static/js/bootstrap-collapse.js')}"></script>
     <script src="${request.static_url('creme_fraiche:static/js/bootstrap-carousel.js')}"></script>
     <script src="${request.static_url('creme_fraiche:static/js/bootstrap-typeahead.js')}"></script>
+
+      % if request.session.peek_flash('success'):
+          <% flash = request.session.pop_flash('success') %>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                
+                % for message in flash:
+                    $.jGrowl('${message}', {
+                        theme: 'success',
+                    }); 
+                % endfor                
+                
+                });
+            </script>
+      % endif            
+      % if request.session.peek_flash('warning'):
+          <% flash = request.session.pop_flash('warning') %>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                
+                % for message in flash:
+                    $.jGrowl('${message}', {
+                        theme: 'danger',
+                    }); 
+                % endfor                
+                
+                });
+            </script>        
+      % endif 
+
+        <!-- jQuery jGrowl -->
+        <script type="text/javascript" src="${request.static_url('creme_fraiche:static/js/plugins/jGrowl/jquery.jgrowl.js')}"></script>
 
   </body>
 </html>

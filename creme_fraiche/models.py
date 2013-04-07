@@ -30,6 +30,8 @@ import transaction
 from pyramid.security import Allow
 from pyramid.security import Everyone
 
+from creme_fraiche.exceptions import AuthException
+
 import logging
 log = logging.getLogger(__name__)
 
@@ -44,9 +46,9 @@ Base = declarative_base()
 
 class RootFactory(object):
     __acl__ = [(Allow, Everyone, 'view'),
-               (Allow, 'admins', 'admin'),
-               (Allow, 'admins', 'user'),
-               (Allow, 'users', 'user')]
+               (Allow, 'admin', 'admin'),
+               (Allow, 'admin', 'user'),
+               (Allow, 'user', 'user')]
 
     def __init__(self, request):
         pass
@@ -372,7 +374,10 @@ class Entry(Base):
 
 def authenticate(username, password):
     # during development
-    return True
+    if username == 'admin':
+        raise AuthException
+    else:
+        return False
 
 
 def get_team(team):

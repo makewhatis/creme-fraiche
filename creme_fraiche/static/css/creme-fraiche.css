@@ -30,3 +30,85 @@
   margin-bottom: 20px;
   float: right;
 }
+
+/* jQuery jGrowl */
+div.jGrowl div.jGrowl-notification,
+div.jGrowl div.jGrowl-closer {
+  color: #ffffff;
+  background-color: #40444d;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.45);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+div.jGrowl div.jGrowl-closer {
+  opacity: 0.35;
+  filter: alpha(opacity=35);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+div.jGrowl div.jGrowl-closer:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.45);
+}
+div.jGrowl div.primary {
+  background-color: #6b9b20;
+  color: #ffffff;
+}
+div.jGrowl div.primary a {
+  color: #ffffff;
+  border-bottom: 1px dotted;
+}
+div.jGrowl div.primary a:hover {
+  color: #ffffff;
+  border-bottom: 1px solid;
+  text-decoration: none;
+}
+div.jGrowl div.danger {
+  background-color: #e74949;
+  color: #ffffff;
+}
+div.jGrowl div.danger a {
+  color: #ffffff;
+  border-bottom: 1px dotted;
+}
+div.jGrowl div.danger a:hover {
+  color: #ffffff;
+  border-bottom: 1px solid;
+  text-decoration: none;
+}
+div.jGrowl div.info {
+  background-color: #4986e7;
+  color: #ffffff;
+}
+div.jGrowl div.info a {
+  color: #ffffff;
+  border-bottom: 1px dotted;
+}
+div.jGrowl div.info a:hover {
+  color: #ffffff;
+  border-bottom: 1px solid;
+  text-decoration: none;
+}
+div.jGrowl div.success {
+  background-color: #6b9b20;
+  color: #ffffff;
+}
+div.jGrowl div.success a {
+  color: #ffffff;
+  border-bottom: 1px dotted;
+}
+div.jGrowl div.success a:hover {
+  color: #ffffff;
+  border-bottom: 1px solid;
+  text-decoration: none;
+}
