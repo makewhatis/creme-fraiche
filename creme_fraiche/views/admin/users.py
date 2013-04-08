@@ -8,6 +8,7 @@ from sqlalchemy.exc import DBAPIError
 from creme_fraiche.models import DBSession
 from creme_fraiche.models import Users
 
+from pyramid.httpexceptions import HTTPFound
 
 @view_config(
     route_name='admin_list_users',
