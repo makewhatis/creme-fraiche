@@ -53,8 +53,6 @@ def admin_create_user_post(request):
     print users
     for user in users:
         print user
-    return dict(
-        project='creme fraiche',
-        users=users,
-        logged_in=authenticated_userid(request)
-    )
+
+    request.session.flash("User Created.", 'success')
+    return HTTPFound(location=request.route_url('admin_list_users'))
