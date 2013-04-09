@@ -5,16 +5,16 @@
             <fieldset>
                 <legend>Create new user</legend>
                 <label>Username</label>
-                <input name="username" type="text">
+                <input name="username" type="text" />
 
                 <label>Full Name</label>
-                <input name="fullname" type="text">               
+                <input name="fullname" type="text" />               
 
                 <label>Email Address</label>
-                <input name="email" type="text">
+                <input name="email" type="text" />
 
                 <label class="checkbox">
-                  <input name="ldap" type="checkbox"> LDAP Auth
+                  <input name="ldap" type="checkbox"> LDAP Auth </input>
                 </label>
                 <button type="submit" class="btn">Submit</button>
             </fieldset>

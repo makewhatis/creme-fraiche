@@ -5,10 +5,10 @@
             <fieldset>
                 <legend>Login</legend>
                 <label>Username</label>
-                <input name="username" type="text">
+                <input name="username" type="text" />
 
                 <label>Password</label>
-                <input name="password" type="password">
+                <input name="password" type="password" />
 
                 <button type="submit" class="btn">Submit</button>
             </fieldset>
