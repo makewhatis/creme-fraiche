@@ -92,6 +92,15 @@ class Users(Base):
             return False
         return user
 
+    @classmethod
+    def create(self, username, fullname, email):
+        count = DBSession.query(self.username)\
+            .filter(self.username == username).count()
+        if count:
+            raise Exception("User already exists")
+        user = self(username, fullname, email)
+        DBSession.add(user)
+
 
 class Roles(Base):
 

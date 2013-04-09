@@ -17,6 +17,8 @@ from creme_fraiche.models import authenticate
 
 from creme_fraiche.exceptions import AuthException
 
+import logging
+log = logging.getLogger(__name__)
 
 @view_config(
     route_name='home_page',
@@ -41,6 +43,7 @@ def home_page(request):
     renderer='/home/fail.mak'
 )
 def fail_view(exc, request):
+    log.exception(exc)
     msg="Uh oh. Somethings broke."
     return dict(
         msg=msg,

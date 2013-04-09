@@ -7,6 +7,9 @@
                 <label>Username</label>
                 <input name="username" type="text">
 
+                <label>Full Name</label>
+                <input name="fullname" type="text">               
+
                 <label>Email Address</label>
                 <input name="email" type="text">
 
