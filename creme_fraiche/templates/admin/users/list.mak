@@ -14,6 +14,7 @@
                   <th>Userame</th>
                   <th>Full Name</th>
                   <th>Username</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -23,6 +24,7 @@
                   <td>${user.username}</td>
                   <td>${user.fullname}</td>
                   <td>${user.email}</td>
+                  <td><input id="${user.id}" formaction="/admin/user/delete/${user.id}" class="delete" type="button" value="Delete" /></td>
                 </tr>
         % endfor               
               </tbody>

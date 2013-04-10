@@ -20,18 +20,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-transition.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-alert.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-modal.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-dropdown.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-scrollspy.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-tab.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-tooltip.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-popover.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-button.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-collapse.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-carousel.js')}"></script>
-    <script src="${request.static_url('creme_fraiche:static/js/bootstrap-typeahead.js')}"></script>
+    <script src="${request.static_url('creme_fraiche:static/js/bootstrap.min.js')}"></script>
+    
 
       % if request.session.peek_flash('success'):
           <% flash = request.session.pop_flash('success') %>
@@ -64,6 +54,29 @@
 
         <!-- jQuery jGrowl -->
         <script type="text/javascript" src="${request.static_url('creme_fraiche:static/js/plugins/jGrowl/jquery.jgrowl.js')}"></script>
+        <script type="text/javascript" language="javascript">
+            // load jquery here before calling this
+            $(document).ready(function() {
+             
+                // delete the entry once we have confirmed that it should be deleted
+                $('.delete').click(function() {
+                    if (confirm("Do you really want to delete this?"))
+                        var parent = $(this).closest('tr');
+                        $.ajax({
+                            type: 'get',
+                            url: $(this).attr('formaction'), // <- replace this with your url here
+                            beforeSend: function() {
+                                parent.animate({'backgroundColor':'#fb6c6c'},300);
+                            },
+                            success: function() {
+                                parent.fadeOut(300,function() {
+                                    parent.remove();
+                                });
+                            }
+                        });        
+                });
+            });
+        </script>
 
   </body>
 </html>

@@ -160,3 +160,30 @@ class TestAdminTeamsFunctional(unittest.TestCase):
 
         res = form.submit('submit')
         self.assertTrue('302 Found' in res)
+
+    def test_admin_create_user_create_delete(self):
+        _registerRoutes(self.config)
+        _registerCommonTemplates(self.config)
+        #login
+        res = self._login()
+
+        res = self.app.get('/admin/users/create')
+        self.assertTrue(res.status_code is 200)
+        form = res.form
+        form['username'] = 'user1'
+        form['fullname'] = 'Mr User1'
+        form['email'] = 'user1@email'
+        res = form.submit('submit')
+        print res
+        self.assertTrue('302 Found' in res)
+
+        res = self.app.get('/admin/users')
+        self.assertTrue('user1' in res)
+
+        res = self.app.get('/admin/user/delete/2')
+        self.assertEqual(res.status_int, 302, res)
+        self.assertTrue('user1' not in res)
+
+        res = self.app.get('/admin/user/delete/21')
+        self.assertEqual(res.status_int, 302, res)
+

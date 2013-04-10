@@ -45,6 +45,7 @@ def admin_create_user(request):
         logged_in=authenticated_userid(request)
     )
 
+
 @view_config(
     route_name='admin_create_user',
     request_method="POST",
@@ -68,3 +69,30 @@ def admin_create_user_post(request):
 
     request.session.flash("User Created.", 'success')
     return HTTPFound(location=request.route_url('admin_list_users'))
+
+
+@view_config(
+    route_name='admin_delete_user',
+    request_method="GET",
+    permission='admin'
+)
+def admin_delete_user(request):
+    user = DBSession.query(Users)\
+        .filter(Users.id == request.matchdict.get('id'))\
+        .first()
+
+    try:
+        DBSession.delete(user)
+    except Exception as e:
+        logging.error(e)
+        request.session.flash(e.message, 'warning')
+        return HTTPFound(
+            location=request.route_url(
+                'admin_create_user'
+            )
+        )
+    return HTTPFound(
+        location=request.route_url(
+            'admin_list_users'
+        )
+    )

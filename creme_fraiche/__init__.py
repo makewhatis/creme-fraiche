@@ -35,6 +35,7 @@ def main(global_config, **settings):
     # Admin
     config.add_route('admin_list_users', '/admin/users')
     config.add_route('admin_create_user', '/admin/users/create')
+    config.add_route('admin_delete_user', '/admin/user/delete/{id}')
     config.add_route('admin_list_teams', '/admin/teams')
 
     config.scan()
