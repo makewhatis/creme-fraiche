@@ -61,6 +61,7 @@ class Users(Base):
     username = Column(String(30), unique=True)
     fullname = Column(String(150))
     email = Column(String(50))
+    status = Boolean
 
     roles = association_proxy(
         "role_associations", "roles")
@@ -72,11 +73,13 @@ class Users(Base):
         self,
         username,
         fullname,
-        email
+        email,
+        status=True
     ):
         self.username = username
         self.fullname = fullname
         self.email = email
+        self.status = status
 
     def __repr__(self):
         return 'Users(%s)' % repr(self.username)

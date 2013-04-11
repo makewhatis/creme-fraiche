@@ -91,6 +91,7 @@ def admin_delete_user(request):
                 'admin_create_user'
             )
         )
+    request.session.flash("User Deleted.", 'success')
     return HTTPFound(
         location=request.route_url(
             'admin_list_users'
