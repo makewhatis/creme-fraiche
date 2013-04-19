@@ -53,7 +53,11 @@ class PyTest(TestCommand):
 
     def finalize_options(self):
         TestCommand.finalize_options(self)
-        self.test_args = ['creme_fraiche/tests', '--capture=sys']
+        self.test_args = [
+          'creme_fraiche/tests',
+          '--capture=sys',
+          '--cov=creme_fraiche',
+          '--cov-report=html']
         self.test_suite = True
 
     def run_tests(self):
