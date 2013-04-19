@@ -16,23 +16,6 @@ env:
   global:
   - secure: ! 'WxNmmOowpVM86hKzAPOqeY1WS1l9Kq+3OJOcHjAWQbWLX4vPYod1TF7fnBfv1QDSNFLn6pGsFRyA695pkeLVGltSVN+5kbohx4gwSo0mEcFLzk+7w2TPUgdZB0BpPa7YciResSs57RRBUFnH0ZNn5yhP5pF85+PLBNA223v3lvU='
 
-after_script:
-  # Install the Heroku gem (or the Heroku toolbelt)
-  - rm -rf .git*
-  - gem install heroku
-  # Turn off warnings about SSH keys:
-  - echo "Host heroku.com" >> ~/.ssh/config
-  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
-  - echo "   CheckHostIP no" >> ~/.ssh/config
-  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
-  # Clear your current Heroku SSH keys:
-  - heroku keys:clear
-  # Add a new SSH key to Heroku
-  - yes | heroku keys:add
-  # Add your Heroku git repo:
-  - git clone -b working git@heroku.com:creme-fraiche.git heroku
-  - cd heroku
-  # Install the Heroku gem (or the Heroku toolbelt)
-  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-  - heroku plugins:install https://github.com/ddollar/heroku-anvil
-  - heroku build -r creme-fraiche
+after_success:
+  - /bin/bash deploy.sh
+  - coveralls
