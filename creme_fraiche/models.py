@@ -136,6 +136,15 @@ class Teams(Base):
     def __repr__(self):
         return 'Teams(%s)' % repr(self.name)
 
+    @classmethod
+    def create(self, name):
+        count = DBSession.query(self.name)\
+            .filter(self.name == name).count()
+        if count:
+            raise Exception("Team already exists")
+        team = self(name)
+        DBSession.add(team)
+
 
 class Team_Membership(Base):
 

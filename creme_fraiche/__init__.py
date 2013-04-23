@@ -37,6 +37,8 @@ def main(global_config, **settings):
     config.add_route('admin_create_user', '/admin/users/create')
     config.add_route('admin_delete_user', '/admin/user/delete/{id}')
     config.add_route('admin_list_teams', '/admin/teams')
+    config.add_route('admin_create_team', '/admin/teams/create')
+    config.add_route('admin_delete_team', '/admin/teams/delete/{id}')
 
     config.scan()
     return config.make_wsgi_app()
